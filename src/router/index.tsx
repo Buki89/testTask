@@ -1,7 +1,7 @@
 import React from "react";
-import Location from "../components/Location";
-import RealEstate from "../components/RealEstate";
-import ContactForm from "../components/ContactForm";
+import LocationPage from "../components/LocationPage";
+import PropertyPage from "../components/PropertyPage";
+import ContactPage from "../components/ContactPage";
 import { Switch, Route, Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
@@ -11,9 +11,9 @@ const AppRouter = () => (
   <Router history={history}>
     <Switch>
       <Route path='/' exact={true} />
-      <Route path='/location' component={Location} />
-      <Route path='/realEstate' component={RealEstate} />
-      <Route path='/contactForm' component={ContactForm} />
+      <Route path='/location' component={LocationPage} />
+      <Route path='/PropertyPage' component={PropertyPage} />
+      <Route path='/ContactPage' component={ContactPage} />
     </Switch>
   </Router>
 );

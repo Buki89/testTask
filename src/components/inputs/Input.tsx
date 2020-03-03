@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface Props {
   label: string;
   type: "text" | "email" | "number";
-  pattern?: any;
+  getValue?: (value: string) => void;
 }
 
 const StyledInput = styled.input`
@@ -21,9 +21,8 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Input = ({ label, type }: Props) => {
+const Input = ({ label, type, getValue }: Props) => {
   const [value, setValue] = useState(undefined);
-  console.log(value);
   return (
     <Wrapper>
       <label>{label}</label>
@@ -31,9 +30,10 @@ const Input = ({ label, type }: Props) => {
         required
         type={type}
         value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(e.target.value);
+          getValue(e.target.value);
+        }}
       ></StyledInput>
     </Wrapper>
   );
