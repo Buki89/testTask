@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  background: #7575a3;
+  background: #9494b8;
   padding: 10px;
   div {
     color: #fff;
