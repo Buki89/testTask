@@ -1,37 +1,22 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
-import styled from "styled-components";
 import Button from "./inputs/Button";
 import Input from "./inputs/Input";
 import { connect } from "react-redux";
 import { addContact } from "../store/actions/clientInfo";
-
-const Body = styled.div`
-  display: flex;
-  background-color: #e0e0eb;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
-  background-color: #fff;
-`;
-const H1 = styled.h1`
-  padding: 0;
-  margin: 0;
-`;
+import { H1, Body, Wrapper } from "../lib/styles";
 
 interface Props {
   addContact: typeof addContact;
+  location: {
+    pathname: string;
+  };
+  history: {
+    push(url: string): void;
+  };
 }
 
-const ContactPage = ({ addContact }: Props) => {
+const ContactPage = ({ addContact, location, history }: Props) => {
   const [agreement, setAgreement] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,22 +24,34 @@ const ContactPage = ({ addContact }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addContact(name, email, phone, agreement);
+    if (name && email && phone && agreement) {
+      addContact(name, email, phone, agreement);
+      history.push("/finalpage");
+    }
   };
 
+  const handleGetPhone = (value: string) => {
+    const regEx = /^\d{9}$/;
+    if (regEx.test(value)) {
+      setPhone(value);
+    }
+    console.log(value);
+  };
+  console.log(phone.length);
   return (
     <>
-      <NavBar />
+      <NavBar location={location.pathname} />
       <Body>
         <Wrapper>
-          <H1>Zadejte vaše kontanktní údaje</H1>
+          <H1>Zadejte vaše kontaktní údaje</H1>
           <form onSubmit={handleSubmit}>
             <Input type='text' label='Jméno a příjmení' getValue={setName} />
             <Input type='email' label='E-mail' getValue={setEmail} />
-            <Input type='number' label='Telefon' getValue={setPhone} />
+            <Input type='number' label='Telefon' getValue={handleGetPhone} />
             <label>
               <input
                 type='checkbox'
+                required
                 checked={agreement}
                 onChange={() => {
                   setAgreement(!agreement);
@@ -63,7 +60,9 @@ const ContactPage = ({ addContact }: Props) => {
               Souhlasím se zpracováním osobních údajů pro obchodní účely.
             </label>
             <div>
-              <Button label='odeslat' type='submit' />
+              {name && phone && agreement && email && (
+                <Button label='odeslat' type='submit' />
+              )}
             </div>
           </form>
         </Wrapper>

@@ -95,3 +95,5 @@ export const countyArr = [
   "Jihomoravský",
   "Praha"
 ];
+
+export const propertyArr = ["Byt", "Dům", "Komerční objekt", "Jiné"];

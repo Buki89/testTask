@@ -17,15 +17,15 @@ export const addProperty = (property: string): Actions => ({
 
 export const addContact = (
   name: string,
-  phone: string,
   email: string,
+  phone: string,
   agreement: boolean
 ) => ({
   type: ClientInfoActions.addContact,
   payload: {
+    name,
     email,
     phone,
-    agreement,
-    name
+    agreement
   }
 });

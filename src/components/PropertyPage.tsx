@@ -1,53 +1,33 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
-import styled from "styled-components";
 import Button from "./inputs/Button";
 import { connect } from "react-redux";
 import { addProperty } from "../store/actions/clientInfo";
-
-const Body = styled.div`
-  display: flex;
-  background-color: #e0e0eb;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
-  background-color: #fff;
-`;
-const H1 = styled.h1`
-  padding: 0;
-  margin: 0;
-`;
+import { propertyArr } from "../data/index";
+import { H1, Body, Wrapper } from "../lib/styles";
 
 interface Props {
   addProperty: typeof addProperty;
   history: {
     push(url: string): void;
   };
+  location: {
+    pathname: string;
+  };
 }
 
-const PropertyPage = ({ addProperty, history }: Props) => {
+const PropertyPage = ({ addProperty, history, location }: Props) => {
   const [property, setProperty] = useState("");
-
-  const propertyArr = ["Byt", "Dům", "Komerční objekt", "Jiné"];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addProperty(property);
-    history.push("/ContactPage");
+    history.push("/contactpage");
   };
 
-  console.log(property);
   return (
     <>
-      <NavBar />
+      <NavBar location={location.pathname} />
       <Body>
         <Wrapper>
           <H1>O jakou nemovitost se jedná?</H1>
@@ -57,6 +37,7 @@ const PropertyPage = ({ addProperty, history }: Props) => {
                 <div key={index}>
                   <label>
                     <input
+                      required
                       name='district'
                       type='radio'
                       value={property}
@@ -68,9 +49,7 @@ const PropertyPage = ({ addProperty, history }: Props) => {
                   </label>
                 </div>
               ))}
-            <div>
-              <Button type='submit' label='Pokračovat' />
-            </div>
+            <div>{property && <Button type='submit' label='Pokračovat' />}</div>
           </form>
         </Wrapper>
       </Body>

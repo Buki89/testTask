@@ -5,32 +5,8 @@ import Button from "./inputs/Button";
 import { data, countyArr } from "../data/index";
 import { connect } from "react-redux";
 import { addLocation } from "../store/actions/clientInfo";
+import { H1, H4, Body, Wrapper } from "../lib/styles";
 
-const Body = styled.div`
-  display: flex;
-  background-color: #e0e0eb;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
-  background-color: #fff;
-`;
-const H1 = styled.h1`
-  padding: 0;
-  margin: 0;
-`;
-const H4 = styled.h4`
-  padding: 0;
-  margin: 0;
-  font-weight: 500;
-`;
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -45,21 +21,24 @@ interface Props {
   history: {
     push(url: string): void;
   };
+  location: {
+    pathname: string;
+  };
 }
 
-const LocationPage = ({ addLocation, history }: Props) => {
+const LocationPage = ({ addLocation, history, location }: Props) => {
   const [district, setDistrict] = useState(""); // okres
   const [county, setCounty] = useState(""); // kraj
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addLocation(county, district);
-    history.push("/PropertyPage");
+    history.push("propertypage");
   };
 
   return (
     <>
-      <NavBar />
+      <NavBar location={location.pathname} />
       <Body>
         <Wrapper>
           <H1>Kde se nachází vaše nemovitost?</H1>
@@ -98,9 +77,7 @@ const LocationPage = ({ addLocation, history }: Props) => {
                 ))}
             </List>
 
-            <div>
-              <Button type='submit' label='Pokračovat' />
-            </div>
+            <div>{district && <Button type='submit' label='Pokračovat' />}</div>
           </form>
         </Wrapper>
       </Body>

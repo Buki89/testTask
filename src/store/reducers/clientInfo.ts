@@ -27,8 +27,8 @@ export default (state = initialState, action: Actions) => {
       return {
         ...state,
         name: action.payload.name,
-        phone: action.payload.phone,
         email: action.payload.email,
+        phone: action.payload.phone,
         agreement: action.payload.agreement
       };
     default:

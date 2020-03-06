@@ -5,16 +5,23 @@ const StyledButton = styled.button`
   color: #fff;
   padding: 10px;
   background: #3385ff;
-  border-radius: 15px;
+  border-radius: 20px;
   border: none;
+  font-size: 20px;
+  margin: 15px 0 0 0;
 `;
 
 interface Props {
   type: "button" | "submit" | "reset";
   label: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
-const Button = ({ type, label }: Props) => {
-  return <StyledButton type={type}>{label}</StyledButton>;
+const Button = ({ type, label, onClick }: Props) => {
+  return (
+    <StyledButton type={type} onClick={onClick}>
+      {label}
+    </StyledButton>
+  );
 };
 
 export default Button;
