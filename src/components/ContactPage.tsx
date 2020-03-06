@@ -35,9 +35,7 @@ const ContactPage = ({ addContact, location, history }: Props) => {
     if (regEx.test(value)) {
       setPhone(value);
     }
-    console.log(value);
   };
-  console.log(phone.length);
   return (
     <>
       <NavBar location={location.pathname} />

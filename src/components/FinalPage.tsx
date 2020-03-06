@@ -30,7 +30,7 @@ const FinalPage = ({
       <NavBar location={location.pathname} />
       <Body>
         <Wrapper>
-          <H1>Konečný souhr</H1>
+          <H1>Konečný souhrn</H1>
           <Row>
             <H3>Jméno:</H3> <P>{name}</P>
           </Row>
